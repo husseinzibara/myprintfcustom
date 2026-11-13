@@ -26,4 +26,4 @@ $(NAME): $(OBJS)
 	ar -rcs $(NAME) $(OBJS)
 
 %.o: %.c $(HEADER)
-	$(CC) $(FLAGS) -c $< -o $@ -I.
+	$(CC) $(FLAGS) -c $< -o $@
