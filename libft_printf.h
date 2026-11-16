@@ -6,7 +6,7 @@
 /*   By: hzibara <hzibara@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/12 09:54:42 by hzibara           #+#    #+#             */
-/*   Updated: 2026/11/14 08:55:58 by hzibara          ###   ########.fr       */
+/*   Updated: 2026/11/16 12:46:25 by hzibara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,18 @@
 #include "libft/libft.h"
 # include <stdarg.h>
 
+size_t left_justify(char **s, size_t width);
+size_t force_sign(char **s, size_t width);
+size_t signpad(char **s, size_t width);
+size_t hex_memory(char **s, size_t width, int capitalize);
+size_t zero_pad(char **s, size_t width);
+char	*ft_itobase(unsigned int nbr, char *base_to);
 
 typedef struct s_flag
 {
 	char	c;
-	int 	(*f)(va_list *);
+	int 	(*f)(char **, int);
 } t_flag;
 
-int		ft_printf(const char *, ...);
-void	left_justify(char **s, size_t minwidth);
-void	force_sign(char **s, size_t minwidth);
-void	sign_pad(char **s, size_t minwidth);
-void	mem_float(char **s, size_t minwidth);
-void	zero_pad(char **s, size_t minwidth);
-void	initiateflags(t_flag **flag);
 
 #endif

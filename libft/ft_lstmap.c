@@ -6,7 +6,7 @@
 /*   By: hzibara <hzibara@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/10 14:45:14 by hzibara           #+#    #+#             */
-/*   Updated: 2026/11/11 10:16:44 by hzibara          ###   ########.fr       */
+/*   Updated: 2026/11/16 08:47:17 by hzibara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,18 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
 	t_list	*result;
 	t_list	*ptr;
+	void	*data;
 
 	if (!lst || !f || !del)
 		return (NULL);
 	result = NULL;
 	while (lst)
 	{
-		ptr = ft_lstnew(f((*lst).content));
+		data = f(lst->content);
+		ptr = ft_lstnew(data);
 		if (!ptr)
 		{
-			del(ptr->content);
+			del(data);
 			ft_lstclear(&result, del);
 			return (NULL);
 		}

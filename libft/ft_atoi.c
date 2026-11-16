@@ -6,7 +6,7 @@
 /*   By: hzibara <hzibara@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/09 15:31:52 by hzibara           #+#    #+#             */
-/*   Updated: 2026/11/12 11:42:44 by hzibara          ###   ########.fr       */
+/*   Updated: 2026/11/16 11:30:34 by hzibara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	ft_atoi(const char *str)
 {
-	int	i;
-	int	sign;
-	int	nb;
+	int		i;
+	int		sign;
+	long	nb;
 
 	i = 0;
 	sign = 1;
@@ -36,5 +36,5 @@ int	ft_atoi(const char *str)
 		nb += (str[i] - '0');
 		i++;
 	}
-	return (nb * sign);
+	return ((int)(nb * sign));
 }
