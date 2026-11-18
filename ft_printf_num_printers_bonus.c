@@ -1,4 +1,16 @@
-#include "libft_printf.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf_num_printers_bonus.c                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hzibara <hzibara@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/11/12 14:40:33 by hzibara           #+#    #+#             */
+/*   Updated: 2026/11/16 13:28:22 by hzibara          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ft_printf_bonus.h"
 
 int	printptr(void *ptr, t_spec *spec, t_flag *flags)
 {

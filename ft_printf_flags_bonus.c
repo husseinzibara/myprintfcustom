@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_flags.c                                  :+:      :+:    :+:   */
+/*   ft_printf_flags_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hzibara <hzibara@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft_printf.h"
+#include "ft_printf_bonus.h"
 
 /*
 ** The ORDER of this array is the order flags are applied, whatever order
@@ -37,17 +37,20 @@ void	initiateflags(t_flag *flag)
 void	filter_mods(char *mods, char *allowed)
 {
 	int	i;
-	int	k;
+	int	kept;
 
 	i = 0;
-	k = 0;
+	kept = 0;
 	while (mods[i])
 	{
 		if (ft_strchr(allowed, mods[i]))
-			mods[k++] = mods[i];
+		{
+			mods[kept] = mods[i];
+			kept++;
+		}
 		i++;
 	}
-	mods[k] = '\0';
+	mods[kept] = '\0';
 }
 
 /* Default alignment (no '-'): pad with spaces on the LEFT. */
@@ -80,9 +83,11 @@ size_t	apply_flags(char **s, size_t width, char *mods, t_flag *flags)
 	j = 0;
 	while (flags[j].c != '\0')
 	{
-		if (ft_strchr(mods, flags[j].c)
-			&& !(flags[j].c == '0' && ft_strchr(mods, '-')))
-			len = flags[j].f(s, width);
+		if (ft_strchr(mods, flags[j].c))
+		{
+			if (flags[j].c != '0' || !ft_strchr(mods, '-'))
+				len = flags[j].f(s, width);
+		}
 		j++;
 	}
 	if (!ft_strchr(mods, '-'))

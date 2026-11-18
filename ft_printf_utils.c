@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_precision.c                              :+:      :+:    :+:   */
+/*   ft_printf_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hzibara <hzibara@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,40 +10,57 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft_printf.h"
+#include "ft_printf.h"
 
-/* String precision = maximum number of characters printed. */
-char	*trim_str(char *s, int prec)
+int	printchar(int c)
 {
-	char	*new;
+	char	ch;
 
-	if (prec < 0 || (size_t)prec >= ft_strlen(s))
-		return (s);
-	new = ft_substr(s, 0, prec);
-	if (!new)
-		return (s);
-	free(s);
-	return (new);
+	ch = (char)c;
+	write(1, &ch, 1);
+	return (1);
 }
 
-/*
-** Integer precision = minimum number of DIGITS (sign not counted).
-** Value 0 with precision 0 prints no digits at all.
-** Once a precision is given, the '0' flag is ignored.
-*/
-void	apply_prec(char **s, t_spec *spec, int is_zero)
+int	printstr(char *s)
 {
-	char	*tmp;
+	if (!s)
+		s = "(null)";
+	ft_putstr_fd(s, 1);
+	return (ft_strlen(s));
+}
 
-	if (spec->prec < 0)
-		return ;
-	if (spec->prec == 0 && is_zero)
-	{
-		tmp = *s;
-		*s = ft_strdup("");
-		free(tmp);
-	}
-	else
-		zero_pad(s, spec->prec + ((*s)[0] == '-'));
-	filter_mods(spec->mods, "-+ #");
+int	printnum(int num)
+{
+	int		len;
+	char	*s;
+
+	s = ft_itoa(num);
+	if (!s)
+		return (0);
+	len = ft_strlen(s);
+	ft_putstr_fd(s, 1);
+	free(s);
+	return (len);
+}
+
+int	printbase(unsigned long num, char *base)
+{
+	int		len;
+	char	*s;
+
+	s = ft_itobase(num, base);
+	if (!s)
+		return (0);
+	len = ft_strlen(s);
+	ft_putstr_fd(s, 1);
+	free(s);
+	return (len);
+}
+
+int	printptr(void *ptr)
+{
+	if (!ptr)
+		return (printstr("(nil)"));
+	ft_putstr_fd("0x", 1);
+	return (2 + printbase((unsigned long)ptr, "0123456789abcdef"));
 }

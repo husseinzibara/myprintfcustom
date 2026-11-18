@@ -1,119 +1,59 @@
-#include "libft_printf.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hzibara <hzibara@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/11/12 14:40:33 by hzibara           #+#    #+#             */
+/*   Updated: 2026/11/16 13:28:22 by hzibara          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-static void	get_mods(char **fmt, t_spec *spec)
-{
-	int	i;
+#include "ft_printf.h"
 
-	i = 0;
-	spec->width = 0;
-	spec->prec = -1;
-	(*fmt)++;
-	while (**fmt && ft_strchr("-+ #0", **fmt))
-	{
-		if (i < 7)
-			spec->mods[i++] = **fmt;
-		(*fmt)++;
-	}
-	spec->mods[i] = '\0';
-}
-
-static void	get_width(va_list *ap, char **fmt, t_spec *spec)
+static int	dispatch(va_list *ap, char conv)
 {
 	int	len;
 
-	if (**fmt == '*')
-	{
-		spec->width = va_arg(*ap, int);
-		(*fmt)++;
-		if (spec->width < 0)
-		{
-			len = ft_strlen(spec->mods);
-			spec->mods[len] = '-';
-			spec->mods[len + 1] = '\0';
-			spec->width = -spec->width;
-		}
-	}
-	else if (ft_isdigit(**fmt))
-	{
-		spec->width = ft_atoi(*fmt);
-		while (ft_isdigit(**fmt))
-			(*fmt)++;
-	}
-}
-
-static void	get_prec(va_list *ap, char **fmt, t_spec *spec)
-{
-	if (**fmt != '.')
-		return ;
-	(*fmt)++;
-	spec->prec = 0;
-	if (**fmt == '*')
-	{
-		spec->prec = va_arg(*ap, int);
-		(*fmt)++;
-		if (spec->prec < 0)
-			spec->prec = -1;
-	}
-	else if (ft_isdigit(**fmt))
-	{
-		spec->prec = ft_atoi(*fmt);
-		while (ft_isdigit(**fmt))
-			(*fmt)++;
-	}
-}
-
-static int	dispatch(va_list *ap, char **fmt, t_flag *flags)
-{
-	t_spec	spec;
-	int		len;
-
 	len = 0;
-	get_mods(fmt, &spec);
-	get_width(ap, fmt, &spec);
-	get_prec(ap, fmt, &spec);
-	if (**fmt == 'i' || **fmt == 'd')
-		len = printnum(va_arg(*ap, int), &spec, flags);
-	if (**fmt == 's')
-		len = printstr(va_arg(*ap, char *), &spec, flags);
-	if (**fmt == 'c')
-		len = printchar(va_arg(*ap, int), &spec, flags);
-	if (**fmt == 'p')
-		len = printptr(va_arg(*ap, void *), &spec, flags);
-	if (**fmt == 'u')
-		len = printuint(va_arg(*ap, unsigned int), &spec, flags);
-	if (**fmt == 'x')
-		len = printhex(va_arg(*ap, unsigned int), &spec, flags);
-	if (**fmt == 'X')
-		len = printHEX(va_arg(*ap, unsigned int), &spec, flags);
-	if (**fmt == '%')
-		len = printchar('%', &spec, flags);
+	if (conv == 'c')
+		len = printchar(va_arg(*ap, int));
+	if (conv == 's')
+		len = printstr(va_arg(*ap, char *));
+	if (conv == 'p')
+		len = printptr(va_arg(*ap, void *));
+	if (conv == 'd' || conv == 'i')
+		len = printnum(va_arg(*ap, int));
+	if (conv == 'u')
+		len = printbase(va_arg(*ap, unsigned int), "0123456789");
+	if (conv == 'x')
+		len = printbase(va_arg(*ap, unsigned int), "0123456789abcdef");
+	if (conv == 'X')
+		len = printbase(va_arg(*ap, unsigned int), "0123456789ABCDEF");
+	if (conv == '%')
+		len = printchar('%');
 	return (len);
 }
 
 int	ft_printf(const char *fmt, ...)
 {
 	va_list	ap;
-	t_flag		flags[6];
-	int			totalwidth;
+	int		total;
 
 	va_start(ap, fmt);
-	initiateflags(flags);
-	totalwidth = 0;
+	total = 0;
 	while (*fmt)
 	{
-		if (*fmt == '%')
+		if (*fmt == '%' && *(fmt + 1))
 		{
-			totalwidth += dispatch(&ap, (char **)&fmt, flags);
-			if (!*fmt)
-				break ;
+			fmt++;
+			total += dispatch(&ap, *fmt);
 		}
-		else
-		{
-			write(1, fmt, 1);
-			totalwidth++;
-		}
+		else if (*fmt != '%')
+			total += printchar(*fmt);
 		fmt++;
 	}
 	va_end(ap);
-	return (totalwidth);
+	return (total);
 }

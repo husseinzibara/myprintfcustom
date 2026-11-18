@@ -1,4 +1,16 @@
-#include "libft_printf.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf_char_printers_bonus.c                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hzibara <hzibara@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/11/12 14:40:33 by hzibara           #+#    #+#             */
+/*   Updated: 2026/11/16 13:28:22 by hzibara          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ft_printf_bonus.h"
 
 static int	print_nul(t_spec *spec)
 {
@@ -14,8 +26,11 @@ static int	print_nul(t_spec *spec)
 	i = 0;
 	if (left)
 		write(1, "\0", 1);
-	while (i++ < pad)
+	while (i < pad)
+	{
 		write(1, " ", 1);
+		i++;
+	}
 	if (!left)
 		write(1, "\0", 1);
 	return (pad + 1);
@@ -78,7 +93,7 @@ int	printhex(unsigned int num, t_spec *spec, t_flag *flags)
 	return (len);
 }
 
-int	printHEX(unsigned int num, t_spec *spec, t_flag *flags)
+int	printhex_upper(unsigned int num, t_spec *spec, t_flag *flags)
 {
 	int		i;
 	int		len;
@@ -93,9 +108,12 @@ int	printHEX(unsigned int num, t_spec *spec, t_flag *flags)
 		filter_mods(spec->mods, "-0");
 	apply_prec(&s, spec, num == 0);
 	len = apply_flags(&s, spec->width, spec->mods, flags);
-	i = -1;
-	while (s[++i])
+	i = 0;
+	while (s[i])
+	{
 		s[i] = ft_toupper(s[i]);
+		i++;
+	}
 	ft_putstr_fd(s, 1);
 	free(s);
 	return (len);

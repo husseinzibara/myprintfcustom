@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_flag_functions.c                                :+:      :+:    :+:   */
+/*   ft_flag_functions_bonus.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hzibara <hzibara@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/11/13 08:39:48 by hzibara           #+#    #+#             */
-/*   Updated: 2026/11/16 13:27:42 by hzibara          ###   ########.fr       */
+/*   Created: 2026/11/12 14:40:33 by hzibara           #+#    #+#             */
+/*   Updated: 2026/11/16 13:28:22 by hzibara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft_printf.h"
+#include "ft_printf_bonus.h"
 
 size_t	left_justify(char **s, size_t width)
 {
@@ -70,22 +70,22 @@ size_t	hex_memory(char **s, size_t width)
 size_t	zero_pad(char **s, size_t width)
 {
 	size_t	len;
-	size_t	p;
-	char	*new;
+	size_t	skip;
+	char	*padded;
 
 	len = ft_strlen(*s);
 	if (len >= width)
 		return (len);
-	p = ((*s)[0] == '-' || (*s)[0] == '+' || (*s)[0] == ' ');
-	if ((*s)[p] == '0' && (*s)[p + 1] == 'x')
-		p += 2;
-	new = malloc(width + 1);
-	if (!new)
+	skip = ((*s)[0] == '-' || (*s)[0] == '+' || (*s)[0] == ' ');
+	if ((*s)[skip] == '0' && (*s)[skip + 1] == 'x')
+		skip += 2;
+	padded = malloc(width + 1);
+	if (!padded)
 		return (len);
-	ft_memcpy(new, *s, p);
-	ft_memset(new + p, '0', width - len);
-	ft_strlcpy(new + p + (width - len), *s + p, len - p + 1);
+	ft_memcpy(padded, *s, skip);
+	ft_memset(padded + skip, '0', width - len);
+	ft_strlcpy(padded + skip + (width - len), *s + skip, len - skip + 1);
 	free(*s);
-	*s = new;
+	*s = padded;
 	return (width);
 }
