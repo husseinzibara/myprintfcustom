@@ -6,17 +6,17 @@
 /*   By: hzibara <hzibara@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/12 14:40:33 by hzibara           #+#    #+#             */
-/*   Updated: 2026/11/16 13:28:22 by hzibara          ###   ########.fr       */
+/*   Updated: 2026/11/18 08:47:35 by hzibara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-# include "libft/libft.h" /* ft_putstr_fd, ft_itoa, ft_strlen */
-# include <stdarg.h> /* va_list, va_start, va_arg, va_end */
-# include <stdlib.h> /* free */
-# include <unistd.h> /* write */
+# include "libft/libft.h"
+# include <stdarg.h> 
+# include <stdlib.h> 
+# include <unistd.h> 
 
 int		ft_printf(const char *fmt, ...);
 int		printchar(int c);

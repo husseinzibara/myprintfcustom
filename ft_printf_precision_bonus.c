@@ -6,13 +6,12 @@
 /*   By: hzibara <hzibara@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/12 14:40:33 by hzibara           #+#    #+#             */
-/*   Updated: 2026/11/16 13:28:22 by hzibara          ###   ########.fr       */
+/*   Updated: 2026/11/18 08:54:07 by hzibara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf_bonus.h"
 
-/* String precision = maximum number of characters printed. */
 char	*trim_str(char *s, int prec)
 {
 	char	*trimmed;
@@ -26,11 +25,6 @@ char	*trim_str(char *s, int prec)
 	return (trimmed);
 }
 
-/*
-** Integer precision = minimum number of DIGITS (sign not counted).
-** Value 0 with precision 0 prints no digits at all.
-** Once a precision is given, the '0' flag is ignored.
-*/
 void	apply_prec(char **s, t_spec *spec, int is_zero)
 {
 	char	*tmp;

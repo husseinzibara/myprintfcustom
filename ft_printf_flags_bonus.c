@@ -6,17 +6,12 @@
 /*   By: hzibara <hzibara@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/12 14:40:33 by hzibara           #+#    #+#             */
-/*   Updated: 2026/11/16 13:28:22 by hzibara          ###   ########.fr       */
+/*   Updated: 2026/11/18 08:52:49 by hzibara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf_bonus.h"
 
-/*
-** The ORDER of this array is the order flags are applied, whatever order
-** the user typed them in: prefix/sign first, then zero fill (which has to
-** go AFTER the sign/prefix so it can pad around them), then '-' last.
-*/
 void	initiateflags(t_flag *flag)
 {
 	flag[0].c = '#';
@@ -33,7 +28,6 @@ void	initiateflags(t_flag *flag)
 	flag[5].f = NULL;
 }
 
-/* Removes from mods every flag the current conversion ignores. */
 void	filter_mods(char *mods, char *allowed)
 {
 	int	i;
@@ -53,7 +47,6 @@ void	filter_mods(char *mods, char *allowed)
 	mods[kept] = '\0';
 }
 
-/* Default alignment (no '-'): pad with spaces on the LEFT. */
 size_t	right_justify(char **s, size_t width)
 {
 	char	*pad;

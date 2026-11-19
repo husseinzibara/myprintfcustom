@@ -6,17 +6,17 @@
 /*   By: hzibara <hzibara@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/12 14:40:33 by hzibara           #+#    #+#             */
-/*   Updated: 2026/11/16 13:28:22 by hzibara          ###   ########.fr       */
+/*   Updated: 2026/11/18 08:49:28 by hzibara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_BONUS_H
 # define FT_PRINTF_BONUS_H
 
-# include "libft/libft.h" /* ft_* helpers, size_t */
-# include <stdarg.h> /* va_list, va_start, va_arg, va_end */
-# include <stdlib.h> /* malloc, free */
-# include <unistd.h> /* write */
+# include "libft/libft.h"
+# include <stdarg.h>
+# include <stdlib.h>
+# include <unistd.h> 
 
 typedef struct s_flag
 {
